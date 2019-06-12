@@ -15,7 +15,7 @@ router.post("",
             price: req.body.price,
             VIN: '1CGFDCVZ21233123',
             url: 'https://media.ed.edmunds-media.com/audi/a7/2018/oem/2018_audi_a7_sedan_prestige-quattro_fq_oem_3_400.jpg',
-            provider: req.body.provider,
+            provider: '5d00c322ffdf893218b1adc1',
             equipment: [
                 'ASR (kontrola trakcji)',
                 'Czujniki parkowania przednie',

@@ -13,7 +13,7 @@
                     <v-flex xs12 sm6 offset-sm3>
                         <v-card style="margin: 30px">
                             <v-img
-                                   :src="car.url"
+                                    :src="car.url"
                                     aspect-ratio="2.75"
                             ></v-img>
 
@@ -29,25 +29,28 @@
                             </v-card-title>
 
 
-                                <div class="row">
-                                    <div class="col">
+                            <div class="row">
+                                <div class="col">
 
-                                    </div>
-                                    <div class="col">
-                                        <v-btn type="submit"  @click="finishOrder" style="width: 100%; margin-top: 30px; margin-bottom: 30px" round color="teal" dark>Dokończ zamówienie</v-btn>
-
-                                    </div>
-                                    <div class="col">
-
-                                    </div>
                                 </div>
+                                <div class="col">
+                                    <v-btn type="submit" @click="finishOrder"
+                                           style="width: 100%; margin-top: 30px; margin-bottom: 30px" round color="teal"
+                                           dark>Sfinalizuj zamówienie
+                                    </v-btn>
+
+                                </div>
+                                <div class="col">
+
+                                </div>
+                            </div>
 
 
                         </v-card>
                     </v-flex>
                 </v-layout>
             </div>
-            <div   class="row" style="margin-top: 30px" >
+            <div class="row" style="margin-top: 30px">
                 <div class="col">
 
                 </div>
@@ -70,9 +73,7 @@
                 <h3 class="display-1">
                     Lista zawartych umów leasingowych:
                 </h3>
-
-                <tree-view :data="userCarLeasing" :options="{maxDepth: 2}"></tree-view>
-             <!-- <div class="table-responsive" v-for="car of userCarLeasing.model">
+                <div class="table-responsive" style="margin-top: 60px">
                     <table class="table">
                         <thead style="text-align: center">
                         <tr>
@@ -83,38 +84,54 @@
                                 Model
                             </td>
                             <td scope="col">
-                                Delete
+                                Cena netto
+                            </td>
+                            <td scope="col">
+                                Czas trwania
+                            </td>
+                            <td scope="col">
+                                Mesięczna rata
+                            </td>
+                            <td scope="col">
+                                Wpłata własna
                             </td>
 
 
                         </tr>
                         </thead>
                         <tbody>
-                        <tr style="text-align: center;" >
+
+                        <tr style="text-align: center;" v-for="leasing in leasingDetails">
                             <td scope="row">
-                                {{car}}
+                                {{leasing.mark}}
+                            </td>
+                            <td scope="row">
+                                {{leasing.model}}
+                            </td>
+                            <td scope="row">
+                                {{leasing.price}}
                             </td>
 
-                           &lt;!&ndash; <td scope="row">
-                                <div id="delete-button">
-                                    <b-button
-                                            @click="onDeleteUrl(url)"
-                                            type="submit"
-                                            variant="ghost-danger"
-                                            class="delete-button"
 
-                                    >
-                                        <i class="icon-trash"></i>
-                                    </b-button>
-                                </div>
+                            <td scope="row">
+                                {{leasing.leasingTime}} miesiące
+                            </td>
+                            <td scope="row">
+                                {{leasing.leasingInstalmentPrice}} zł
+                            </td>
+                            <td scope="row">
+                                {{leasing.leasingEntryFee*100}} %
+                            </td>
 
-                            </td>&ndash;&gt;
+
                         </tr>
 
                         </tbody>
 
                     </table>
-                </div>&ndash;&gt;-->
+                </div>
+
+
             </div>
 
 
@@ -138,9 +155,10 @@
         props: [],
         data() {
             return {
+                dialog: false,
                 car: {
-                    userId:'',
-                    carId:'',
+                    userId: '',
+                    carId: '',
                     mark: '',
                     model: '',
                     price: '',
@@ -149,38 +167,27 @@
                     leasingTime: '',
                     leasingInstalmentPrice: ''
                 },
-                leasing:[
-
-
-                ],
-                userCarLeasing:{
-                    Marka:[],
-                    Model:[],
-                    Rata:[],
-                    Okres:[],
-
-                },
+                leasingDetails: '',
+                userCarLeasing: [],
                 orderStatus: true,
                 orderSuccessMessage: '',
                 orderSuccessStatus: false
             }
         },
-        destroyed(){
-          this.orderSuccessMessage = '';
+        destroyed() {
+            this.orderSuccessMessage = '';
         },
         mounted() {
-
+            window.scrollTo(0, 0);
             axios.get(`http://localhost:3000/leasing/${localStorage.getItem('userId')}`)
-                .then((res)=>{
+                .then((res) => {
+                    this.leasingDetails = res.data.leasing;
+                    for (let i = 0; i < this.leasingDetails.length; i++) {
+                        this.getLeasingCar(this.leasingDetails[i].carId, [i])
 
-                    for(let i = 0; i<res.data.cars.length; i++){
-                        this.getLeasingUserCar(res.data.cars[i])
                     }
-                    res.data.leasingInstalmentPrice.map((val)=> this.userCarLeasing.Rata.push(val));
-                    res.data.leasingTime.map((val)=> this.userCarLeasing.Okres.push(val));
-                    console.log('res:', res.data)
                 })
-                .catch(()=>{
+                .catch(() => {
 
                 });
 
@@ -198,18 +205,31 @@
                         this.car.userId = localStorage.getItem("userId");
                     });
 
-                console.log('jeee wybrano auto')
+
             } else {
                 this.orderStatus = false;
-                console.log('nie maaaaa')
+
             }
         },
 
         methods: {
-            finishOrder(){
+
+            getLeasingCar(leasingCarId, leasingDetailsLength) {
+                axios.get(`http://localhost:3000/cars/${leasingCarId}`)
+                    .then((response) => {
+                        this.leasingDetails[leasingDetailsLength]['mark'] = response.data.mark;
+                        this.leasingDetails[leasingDetailsLength]['model'] = response.data.model;
+                        this.leasingDetails[leasingDetailsLength]['price'] = response.data.price;
+                    })
+                    .catch((e) => {
+                        console.log('eeeeerrrorr', e);
+                    });
+
+            },
+            finishOrder() {
                 axios.post(`http://localhost:3000/leasing`, this.car)
                     .then((response) => {
-                        if(response.status === 200){
+                        if (response.status === 200) {
                             this.orderStatus = false;
                             this.orderSuccessStatus = true;
                             this.orderSuccessMessage = 'Zamówienie zostało pomyślnie zakończone, na adres e-mail przesłaliśmy niezbędne dokumenty, zapraszamy po odbiór samochodu na ulicę Żeromskiego 19, pozdrawiamy zespół Master Lease';
@@ -219,26 +239,14 @@
                             localStorage.removeItem('leasingCarId');
                             localStorage.removeItem('leasingEntryFee');
                         }
-                       console.log('resssss', response)
+
                     })
-                    .catch((e)=>{
+                    .catch((e) => {
                         console.log('e', e)
                     })
 
             },
-            getLeasingUserCar(carId){
-                axios.get(`http://localhost:3000/cars/${carId}`)
-                    .then((response) => {
-                        console.log('response', response)
-                        this.userCarLeasing.Marka.push(response.data.mark);
-                        this.userCarLeasing.Model.push(response.data.model);
-                        console.log('user car leasing:', this.userCarLeasing);
-                    })
-                    .catch((e) => {
-                        console.log('eeeeerrrorr', e);
-                    });
 
-            }
         },
         computed: {}
     }

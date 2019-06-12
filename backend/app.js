@@ -18,9 +18,14 @@ const reservationPlaces = require('./routes/reservation-places');
 const reservationSelectedDate = require('./routes/reservation-selected-date');
 const newsletterRoute = require('./routes/newsletters');
 const leasingRouter = require('./routes/leasing');
+const providerRouter = require('./routes/providers');
+
 
 const carsRoute = require('./routes/cars');
 const Cars = require('./models/cars');
+const Provider = require('./models/provider');
+
+
 
 const app = express();
 
@@ -44,7 +49,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 
-
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -58,6 +62,8 @@ app.use((req, res, next) => {
     next();
 });
 
+
+app.use("/provider", providerRouter);
 app.use('/leasing', leasingRouter);
 app.use('/cars', carsRoute);
 app.use('/signup', signupRouter);

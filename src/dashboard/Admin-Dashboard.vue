@@ -32,7 +32,21 @@
                                     <p>Cena netto: {{car.price}}</p>
                                     <p>Dostępność: {{car.availability}}</p>
                                     <p>VIN: {{car.VIN}}</p>
-                                    <p>Dostawca: {{car.provider}}</p>
+                                    <p>Dostawca:<br></p>
+                                    <ul>
+                                        <li>
+                                            Firma: {{carsProvider.company}}
+                                        </li>
+                                        <li>
+                                            Adres: {{carsProvider.adress}}, 00-000 Warszawa
+                                        </li>
+                                        <li>
+                                            E-Mail: {{carsProvider.contact}}
+                                        </li>
+                                        <li>
+                                            Telefon: {{carsProvider.number}}
+                                        </li>
+                                    </ul>
                                 </v-card-text>
                             </v-card>
                         </b-col>
@@ -84,16 +98,23 @@
         props: [],
         mounted() {
             this.getCar();
+            this.getProviderDetails();
         },
         data() {
             return {
                 cars: [],
+                carsProvider:{
+                    adress:'',
+                    company:'',
+                    contact:'',
+                    number:''
+                },
                 form: {
                     mark: '',
                     model: '',
                     engine: '',
                     price: null,
-                    provider: 'CAR LOGISTICS',
+                    provider: 'CAR LOGISTICS WARSAW',
                 }
             }
         },
@@ -103,6 +124,22 @@
             },
             logoutAdmin() {
                 this.$router.push({name: "Home"})
+            },
+            getProviderDetails(){
+                axios.get("http://localhost:3000/provider/5d00c322ffdf893218b1adc1")
+                    .then((res)=>{
+                        console.log('res', res.data)
+                        this.carsProvider.company = res.data.company;
+                        this.carsProvider.number = res.data.number;
+                        this.carsProvider.contact = res.data.contact;
+                        this.carsProvider.adress = res.data.adress;
+
+                        console.log('cars:', this.carsProvider);
+                    })
+                    .catch((e)=>{
+                        console.log('e', e)
+                    })
+
             },
             getCar() {
                 axios.get("http://localhost:3000/cars")
@@ -124,11 +161,11 @@
                     .then((res) => {
                         console.log('res:', res)
                         if (res.status === 201) {
-                            this.cars.push(this.form);
                             this.form.mark = '';
                             this.form.model = '';
                             this.form.price = null;
                             this.form.url = '';
+                            this.form.engine = '';
 
                         }
                     })

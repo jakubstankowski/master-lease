@@ -15,10 +15,7 @@
             </v-flex>
         </v-layout>
         <b-row>
-            <b-col v-for="car in cars">
-<!--
-                v-if="car.availability !== true"
--->
+            <b-col v-if="car.availability" v-for="car in cars">
                 <v-card   class="v-card">
                     <v-img
                             :src="car.url"

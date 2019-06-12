@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <Header></Header>
     <router-view></router-view>
     <!--<Home></Home>
     <CarView></CarView>-->

@@ -1,9 +1,8 @@
 <template>
     <div class="home">
-
-        <img src="../../assets/image/home3.jpg">
+        <Header></Header>
+        <img src="../../assets/image/home4.jpg">
         <Offerts></Offerts>
-        <AboutUs></AboutUs>
 
     </div>
 </template>
@@ -14,10 +13,12 @@
     import Offerts from "../components/Offerts";
     import Footer from "../components/Footer";
     import AboutUs from "../components/AboutUs";
+    import Header from "../components/Header";
 
 
     export default {
         components: {
+            Header,
             AboutUs,
             Footer,
             Offerts,

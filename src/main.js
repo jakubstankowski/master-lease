@@ -5,6 +5,9 @@ import router from './router'
 import 'vuetify/dist/vuetify.min.css'
 
 import Vuetify from 'vuetify'
+import TreeView from "vue-json-tree-view"
+Vue.use(TreeView)
+
 
 import BootstrapVue from 'bootstrap-vue'
 

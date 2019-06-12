@@ -1,22 +1,23 @@
 <template lang="html">
 
     <section class="car-view">
+        <Header></Header>
         <v-layout class="car-layout">
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
                     <v-img
-                            :src="car.obrazekUrl"
+                            :src="car.url"
                             aspect-ratio="2.75"
                     ></v-img>
 
                     <v-card-title primary-title>
                         <div>
 
-                            <h3 class="headline mb-0">{{car.marka}} A4 B6 2019 rok</h3>
+                            <h3 class="headline mb-0">{{car.mark}} {{car.model}}</h3>
                             <div>
                                 Cena całkowita:
                                 <strong style="color:#009688">
-                                    {{car.cena}} zł netto
+                                    {{car.price}} zł netto
                                 </strong>
                             </div>
                         </div>
@@ -44,7 +45,7 @@
                                             <v-avatar>
                                                 <v-icon>check_circle</v-icon>
                                             </v-avatar>
-                                            Okres Spłaty 24 - 60 miesięcy
+                                            Okres Spłaty 24 - 48 miesięcy
                                         </v-chip>
                                     </div>
                                 </div>
@@ -55,7 +56,7 @@
                                             <v-avatar>
                                                 <v-icon>check_circle</v-icon>
                                             </v-avatar>
-                                            Opłata wstępna 0 - 45 %
+                                            Opłata wstępna 10 - 40 %
                                         </v-chip>
                                     </div>
 
@@ -109,7 +110,7 @@
                                                     <span class="headline">Zmień wysokość raty leasingu</span>
                                                     <p>Cena netto auta:
                                                         <strong style="color: #009688">
-                                                            {{car.cena}}*
+                                                            {{car.price}}*
                                                         </strong>
                                                         zł</p>
                                                 </v-card-title>
@@ -140,7 +141,9 @@
                                                             </v-flex>
                                                         </v-layout>
                                                     </v-container>
-                                                    <small>*do ceny auta wliczone zostało ubezpieczenie w cenie 3800 zł za rok</small>
+                                                    <small>*do ceny auta wliczone zostało ubezpieczenie w cenie 3800 zł
+                                                        za rok
+                                                    </small>
                                                 </v-card-text>
                                                 <v-card-actions>
                                                     <v-spacer></v-spacer>
@@ -158,9 +161,21 @@
                             </div>
                             <div class="col">
                                 <div class="text-xs-center" style="margin: 30px">
-                                    <v-btn round color="teal" dark>Zamów samochód</v-btn>
+                                    <v-btn @click="orderCar" round color="teal" dark>Zamów samochód</v-btn>
                                 </div>
+
                             </div>
+
+
+                        </div>
+
+                        <div class="error-section" style="text-align: center">
+                            <h4 class="display-1">
+                                <strong style="color: #009688">
+                                    {{errorOrder}}
+                                </strong>
+                            </h4>
+
                         </div>
 
 
@@ -192,6 +207,7 @@
 
                 </v-card>
             </v-flex>
+
         </v-layout>
     </section>
 
@@ -200,14 +216,19 @@
 <script lang="js">
 
     import axios from 'axios';
+    import Header from "../components/Header";
+    import AuthService from "../auth/AuthService";
 
+    const authService = new AuthService();
 
     export default {
         name: 'car-view',
+        components: {Header},
         props: [],
         data() {
             return {
                 car: '',
+                errorOrder: '',
                 leasing: {
                     price: null,
                     entryFee: 0.1,
@@ -242,7 +263,7 @@
                         },
                         {
                             name: '48 miesięcy',
-                            last:48
+                            last: 48
                         },
                     ]
 
@@ -253,11 +274,7 @@
                     {
                         id: 1,
                         name: 'Wyposażenie :',
-                        children: [
-                            {id: 2, name: 'Podgrzewane siedzenia'},
-                            {id: 3, name: 'HUD'},
-                            {id: 4, name: 'Wspomaganie pasa ruchu'}
-                        ]
+                        children: []
                     },
                     {
                         id: 5,
@@ -283,11 +300,17 @@
 
             const carId = this.$route.params.carId;
             console.log('CAR ID:', carId);
-            axios.get(`https://masterleaseproject.azurewebsites.net/api/car/${carId}`)
+            axios.get(`http://localhost:3000/cars/${carId}`)
                 .then((response) => {
                     this.car = response.data;
-                    this.leasing.price = response.data.cena;
+                    this.leasing.price = response.data.price;
                     this.calculateInsalmentPrice();
+                    response.data.equipment.map((val) => {
+                        this.items[0].children.push({
+                            name: val
+                        })
+                    });
+
                 })
                 .catch((e) => {
                     console.log('eeeeerrrorr', e);
@@ -298,6 +321,34 @@
         },
         methods: {
 
+            orderCar() {
+
+                if (authService.getAuthData()) {
+                    this.saveLeasingDeatils();
+                    this.$router.push({
+                        name: 'Customer Dashboard'
+                    });
+
+
+                } else {
+                    this.saveLeasingDeatils();
+                    this.errorOrder = 'Trwa przekierowanie do rejestracji...';
+                    setTimeout(() => {
+                        this.$router.push({
+                            name: 'Customer Register'
+                        });
+
+
+                    }, 2500)
+                }
+
+            },
+            saveLeasingDeatils() {
+                localStorage.setItem('leasingCarId', this.$route.params.carId);
+                localStorage.setItem('leasingEntryFee', this.leasing.entryFee);
+                localStorage.setItem('leasingTime', this.leasing.leasingTime);
+                localStorage.setItem('leasingInstalmentPrice', this.leasing.instalmentPrice);
+            },
             onChangeInstalment() {
                 this.calculateInsalmentPrice();
             },
@@ -307,10 +358,10 @@
                 const entryFee = this.leasing.entryFee;
                 const sumLeasingDebt = carPrice * entryFee;
                 const leasingDebt = carPrice - sumLeasingDebt;
-                const firstPartInstalment = leasingDebt * 0.0074  * (Math.pow(1+ 0.0074, leasingTime)) - (carPrice*0.1 * 0.0074);
-                const secondPartInstalment = ((Math.pow(1+0.0074, leasingTime)) -1);
+                const firstPartInstalment = leasingDebt * 0.0074 * (Math.pow(1 + 0.0074, leasingTime)) - (carPrice * 0.1 * 0.0074);
+                const secondPartInstalment = ((Math.pow(1 + 0.0074, leasingTime)) - 1);
 
-                return this.leasing.instalmentPrice = Math.round(firstPartInstalment/secondPartInstalment);
+                return this.leasing.instalmentPrice = Math.round(firstPartInstalment / secondPartInstalment);
             }
 
         },

@@ -1,0 +1,129 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main.6a3c5af6d7cf485fbf60.js",
+        "/polyfills.20ab2d163684112c2aba.js",
+        "/runtime.ec2944dd8b20ec099bf3.js",
+        "/styles.3a68f2a97348f3fa2759.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/image/icon/add_photo.png",
+        "/assets/image/icon/admin.png",
+        "/assets/image/icon/admin.webp",
+        "/assets/image/icon/avatar.webp",
+        "/assets/image/icon/calendar.webp",
+        "/assets/image/icon/clock.webp",
+        "/assets/image/icon/facebook.webp",
+        "/assets/image/icon/funds.webp",
+        "/assets/image/icon/icon1.webp",
+        "/assets/image/icon/icon2.webp",
+        "/assets/image/icon/ikona4.webp",
+        "/assets/image/icon/ikona5.png",
+        "/assets/image/icon/ikona5.webp",
+        "/assets/image/icon/instagram.webp",
+        "/assets/image/icon/logout.png",
+        "/assets/image/icon/menu (1).webp",
+        "/assets/image/icon/menu (2).webp",
+        "/assets/image/icon/menu-logo.webp",
+        "/assets/image/icon/multiple-users-silhouette.png",
+        "/assets/image/icon/phone-symbol-of-an-auricular-inside-a-circle.webp",
+        "/assets/image/icon/picture.webp",
+        "/assets/image/icon/shut-down-icon.png",
+        "/assets/image/icon/shut-down-icon.webp",
+        "/assets/image/icon/tripadvisor.png",
+        "/assets/image/logo/logo.webp",
+        "/assets/image/logo/logo2.webp",
+        "/assets/image/logo/white_logo.webp",
+        "/assets/image/photo/1.webp",
+        "/assets/image/photo/2.webp",
+        "/assets/image/photo/home_photo2.webp",
+        "/assets/image/photo/home_photo3.webp",
+        "/assets/image/photo/home_photo4.webp",
+        "/assets/image/photo/home_photo6.webp",
+        "/assets/image/photo/home_photo7.webp",
+        "/assets/image/photo/photo_logo.webp",
+        "/assets/pwa-icons/192x192.png",
+        "/assets/pwa-icons/512x512.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/image/icon/add_photo.png": "d34738fddb7ec55d47af80c1f19b82f0cd95ea40",
+    "/assets/image/icon/admin.png": "58191ee316281496ad5dcc3ccc32fd55f0e41523",
+    "/assets/image/icon/admin.webp": "827057f1d39a9baf8051d222f2cc55a8cc4cc0af",
+    "/assets/image/icon/avatar.webp": "ecc28c697f0a7e029171bfaa24cc901e4f916e38",
+    "/assets/image/icon/calendar.webp": "3bf66779a476e170b2f56dc94399bff31152918a",
+    "/assets/image/icon/clock.webp": "96293aed4b47d52e943b9898ebbdc08f636e26e4",
+    "/assets/image/icon/facebook.webp": "e2405fc85638c761e89ce848c85eee5215f0bc70",
+    "/assets/image/icon/funds.webp": "629f3c2d4921661955fea672f07f2cb776cbfacc",
+    "/assets/image/icon/icon1.webp": "116121e22626162e194d8137c01b44ddc8710b0d",
+    "/assets/image/icon/icon2.webp": "e5a416472531d590ca52707c50dcbc3364562bb3",
+    "/assets/image/icon/ikona4.webp": "960be00b719acab4778f30b22f875b61207913be",
+    "/assets/image/icon/ikona5.png": "f56c0e552d536172d760bd0304275c7763333115",
+    "/assets/image/icon/ikona5.webp": "bd4148d4d3eb76e91d4b4b6f207f618c2f01a4c1",
+    "/assets/image/icon/instagram.webp": "c744a705ebed25b79c500ef6bb1fe5f5f7aec17a",
+    "/assets/image/icon/logout.png": "7c8a4055d16f417262ba519765745931ca7a918d",
+    "/assets/image/icon/menu (1).webp": "98123421618496fd991a8000fb8776245b45029d",
+    "/assets/image/icon/menu (2).webp": "9b2b4a7c5ee836f8de5f602a5c209cf1ee4a0928",
+    "/assets/image/icon/menu-logo.webp": "db01ecae61c2a3769a913510bb34ec7fde092918",
+    "/assets/image/icon/multiple-users-silhouette.png": "8e3de28fb3363ee81b754e165fa0efcb7dfba34c",
+    "/assets/image/icon/phone-symbol-of-an-auricular-inside-a-circle.webp": "8a54143492ea1d685447f2c68ce165b860435bcb",
+    "/assets/image/icon/picture.webp": "e535bc46fdbc3cbfd0f7d63697c58bcb574ec24d",
+    "/assets/image/icon/shut-down-icon.png": "551c8395ffa5c1e1917eee944c0a2e7d8501825e",
+    "/assets/image/icon/shut-down-icon.webp": "3832e5b3d30916316f737c390d28d78fe7fe55d3",
+    "/assets/image/icon/tripadvisor.png": "be56d69b26160f6a30521188ddbf3c5adaac2c9a",
+    "/assets/image/logo/logo.webp": "9c1e2ca0ae04015b5f7015842f4b44034c821697",
+    "/assets/image/logo/logo2.webp": "2fbace298c1fe85113b162c3952bf166011b2dfd",
+    "/assets/image/logo/white_logo.webp": "94483799afec3c23cc6b65832ea869ba3b3d8528",
+    "/assets/image/photo/1.webp": "2745b8b7d28f172fc6f655b47790fe4640f0dfe9",
+    "/assets/image/photo/2.webp": "74dd9d2d1534b15bc38493cb782cc615c360dda6",
+    "/assets/image/photo/home_photo2.webp": "af026efd2fce1a4a7e2305af37713518439f6933",
+    "/assets/image/photo/home_photo3.webp": "90949378312507e231701fbde3ee6d9a90162ac8",
+    "/assets/image/photo/home_photo4.webp": "27a64b88a02384aa64a3e5f4abe20284bd9ae34c",
+    "/assets/image/photo/home_photo6.webp": "47f608baa84b088fe68fb6ea5570056b9723e3c2",
+    "/assets/image/photo/home_photo7.webp": "3f995e946f94474ee4f48254e6957f945ae11b81",
+    "/assets/image/photo/photo_logo.webp": "04e9f3854e008b624d26ee6872e3029fefb87920",
+    "/assets/pwa-icons/192x192.png": "eab12d7d5134d611d3d73c8dd714e6a67f4517c0",
+    "/assets/pwa-icons/512x512.png": "2d3db83daec31e13ed6862c7ee486743d4363ad3",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "681492ac40f0466a0fc48320ef2418a35b642533",
+    "/main.6a3c5af6d7cf485fbf60.js": "217f9d539a6e5263726e3fb096ee2401effba36a",
+    "/polyfills.20ab2d163684112c2aba.js": "ce68d153e9b9b6d26b625069c0ee99ae09c6f255",
+    "/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "/styles.3a68f2a97348f3fa2759.css": "2316d2cc185a6ef00700cfa0f420da2aff74706b"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

@@ -16,17 +16,19 @@
         </v-layout>
         <b-row>
             <b-col v-for="car in cars">
-
-                <v-card class="v-card">
+<!--
+                v-if="car.availability !== true"
+-->
+                <v-card   class="v-card">
                     <v-img
-                            :src="car.obrazekUrl"
+                            :src="car.url"
                             aspect-ratio="2.75"
                     ></v-img>
 
                     <v-card-title primary-title>
                         <div>
-                            <h3 class="headline mb-0">{{car.marka}} A7 3.0 TDI </h3>
-                            <div> Cena netto: {{car.cena}}</div>
+                            <h3 class="headline mb-0">{{car.mark}} {{car.model}} 3.0 TDI </h3>
+                            <div> Cena netto: {{car.price}}</div>
                         </div>
                         <div class="row">
 
@@ -43,7 +45,7 @@
                                     <v-avatar>
                                         <v-icon>check_circle</v-icon>
                                     </v-avatar>
-                                    Okres Spłaty 24 - 60 miesięcy
+                                    Okres Spłaty 24 - 48 miesięcy
                                 </v-chip>
                             </div>
                             <div class="col">
@@ -51,7 +53,7 @@
                                     <v-avatar>
                                         <v-icon>check_circle</v-icon>
                                     </v-avatar>
-                                    Opłata wstępna 0 - 45 %
+                                    Opłata wstępna 10 - 40 %
                                 </v-chip>
                             </div>
 
@@ -59,16 +61,22 @@
                         </div>
                     </v-card-title>
 
-                    <v-card-actions>
-                        <router-link :to="{
+                    <div class="row">
+                        <div class="col">
+                            <router-link :to="{
                                       name: 'Car View',
-                                      params: { carId: car.samochodId }
+                                      params: { carId: car._id }
                                       }">
-                            <v-btn style="width: 100%; margin: 0" flat>Poznaj szczegóły oferty auta o id
-                                {{car.samochodId}}
-                            </v-btn>
-                        </router-link>
-                    </v-card-actions>
+
+                                <v-btn    style="width: 95%"  color="grey darken-3" dark>
+                                    Poznaj szczegóły oferty auta
+                                </v-btn>
+
+
+                            </router-link>
+                        </div>
+
+                    </div>
                 </v-card>
             </b-col>
         </b-row>
@@ -92,10 +100,10 @@
             }
         },
         beforeCreate() {
-            axios.get("https://masterleaseproject.azurewebsites.net/api/cars")
+            axios.get("http://localhost:3000/cars")
                 .then((response) => {
-
-                    response.data.map((car) => {
+                    console.log('response:', response)
+                    response.data.cars.map((car) => {
                         this.cars.push(car);
                     });
 
@@ -109,7 +117,9 @@
 
         },
 
-        methods: {},
+        methods: {
+
+        },
         computed: {}
     }
 </script>

@@ -79,7 +79,7 @@
         name: 'customer-register',
         props: [],
         mounted() {
-
+            window.scrollTo(0, 0);
         },
         data() {
             return {

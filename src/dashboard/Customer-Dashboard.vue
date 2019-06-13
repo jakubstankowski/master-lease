@@ -69,7 +69,12 @@
 
             </div>
 
-            <div class="leasing-table" style="text-align: center">
+            <div  v-if="!getLeasingDataFinally" class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div  v-if="getLeasingDataFinally" class="leasing-table" style="text-align: center">
                 <h3 class="display-1">
                     Lista zawartych umów leasingowych:
                 </h3>
@@ -81,11 +86,11 @@
                                 Marka
                             </td>
                             <td scope="col">
-                                Model
-                            </td>
-                            <td scope="col">
-                                Cena netto
-                            </td>
+                                 Model
+                             </td>
+                             <td scope="col">
+                                 Cena netto
+                             </td>
                             <td scope="col">
                                 Czas trwania
                             </td>
@@ -105,14 +110,12 @@
                             <td scope="row">
                                 {{leasing.mark}}
                             </td>
-                            <td scope="row">
+                           <td scope="row">
                                 {{leasing.model}}
                             </td>
                             <td scope="row">
-                                {{leasing.price}}
+                                {{leasing.price}} zł
                             </td>
-
-
                             <td scope="row">
                                 {{leasing.leasingTime}} miesiące
                             </td>
@@ -133,8 +136,6 @@
 
 
             </div>
-
-
         </div>
     </section>
 
@@ -156,6 +157,10 @@
         data() {
             return {
                 dialog: false,
+                notifications: false,
+                sound: true,
+                widgets: false,
+                getLeasingDataFinally: false,
                 car: {
                     userId: '',
                     carId: '',
@@ -182,10 +187,18 @@
             axios.get(`http://localhost:3000/leasing/${localStorage.getItem('userId')}`)
                 .then((res) => {
                     this.leasingDetails = res.data.leasing;
-                    for (let i = 0; i < this.leasingDetails.length; i++) {
-                        this.getLeasingCar(this.leasingDetails[i].carId, [i])
-
+                    console.log('response:', res);
+                    for (let i = 0; i < res.data.leasing.length; i++) {
+                        this.getLeasingCar(res.data.leasing[i].carId, [i])
                     }
+
+
+                    setTimeout(()=>{
+                            this.getLeasingDataFinally = true;
+                            console.log('this leasing details:', this.leasingDetails);
+                    }, 1500)
+
+
                 })
                 .catch(() => {
 
@@ -215,6 +228,7 @@
         methods: {
 
             getLeasingCar(leasingCarId, leasingDetailsLength) {
+                console.log('get leasing car', leasingCarId)
                 axios.get(`http://localhost:3000/cars/${leasingCarId}`)
                     .then((response) => {
                         this.leasingDetails[leasingDetailsLength]['mark'] = response.data.mark;
@@ -222,7 +236,6 @@
                         this.leasingDetails[leasingDetailsLength]['price'] = response.data.price;
                     })
                     .catch((e) => {
-                        console.log('eeeeerrrorr', e);
                     });
 
             },
@@ -240,9 +253,10 @@
                             localStorage.removeItem('leasingEntryFee');
                         }
 
+                        console.log('response:', response)
+
                     })
                     .catch((e) => {
-                        console.log('e', e)
                     })
 
             },
@@ -253,6 +267,10 @@
 </script>
 
 <style scoped lang="scss">
+    .spinner-border{
+        width: 250px;
+        height: 250px;
+    }
     .container {
 
         min-height: 80vh;

@@ -14,7 +14,7 @@
             </v-card-title>
 
             <v-card-actions class="grey darken-3 justify-center">
-                &copy;2019 — <strong>Stankowski, Kolbus, Napiórkowski</strong>
+                &copy;2019 —  <strong>Jakub Stankowski</strong>
             </v-card-actions>
         </v-card>
     </v-footer>

@@ -48,10 +48,11 @@ router.post("", (req, res, next) => {
         });
     });
 
-    leasing.save().then((r) => {
+
+    leasing.save().then(() => {
         res.status(200).json({
             message: "Finish order",
-            result: r
+            newLeasings: newLeasing
         });
     })
 

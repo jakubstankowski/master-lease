@@ -40,7 +40,7 @@
         name: 'admin-login',
         props: [],
         mounted() {
-
+            window.scrollTo(0, 0);
         },
         data() {
             return {

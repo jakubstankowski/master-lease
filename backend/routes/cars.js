@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const About = require('../models/about');
 const Cars = require('../models/cars');
-
-const ReservationPlaces = require('../models/reservation-places');
-
 
 router.post("",
     (req, res, next) => {

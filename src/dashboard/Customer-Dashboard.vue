@@ -50,10 +50,8 @@
                     </v-flex>
                 </v-layout>
             </div>
-            <div class="row" style="margin-top: 30px">
-                <div class="col">
+            <div class="row" style="margin-top: 30px; margin-bottom: 30px; padding: 30px">
 
-                </div>
                 <div class="col" v-if="orderSuccessStatus">
                     <v-alert
                             :value="true"
@@ -61,9 +59,6 @@
                     >
                         {{orderSuccessMessage}}
                     </v-alert>
-                </div>
-                <div class="col">
-
                 </div>
 
 
@@ -242,6 +237,19 @@
             finishOrder() {
                 axios.post(`http://localhost:3000/leasing`, this.car)
                     .then((response) => {
+
+                        const newLeasing = {
+                            mark: this.car.mark,
+                            model: this.car.model,
+                            price: this.car.price,
+                            leasingEntryFee: this.car.leasingEntryFee,
+                            leasingTime: this.car.leasingTime,
+                            leasingInstalmentPrice: this.car.leasingInstalmentPrice
+                        };
+
+                        this.leasingDetails.push(newLeasing);
+
+
                         if (response.status === 200) {
                             this.orderStatus = false;
                             this.orderSuccessStatus = true;
